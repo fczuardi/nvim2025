@@ -52,6 +52,21 @@ local plugins = {
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
 
+  -- Svelte syntax highlight
+  { "leafOfTree/vim-svelte-plugin",
+    config = function()
+      vim.g.vim_svelte_plugin_use_typescript = 1
+    end,
+  },
+
+  -- JJ Diff Conflicts
+  { "rafikdraoui/jj-diffconflicts" },
+
+  -- Theme: Catppuccin
+  { "catppuccin/nvim", name = "colorscheme:catppuccin",
+    config = function() vim.cmd.colorscheme('catppuccin-frappe') end, -- default colorscheme
+  },
+
   -- Tree-sitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -82,18 +97,6 @@ local plugins = {
     end,
   },
 
-  -- Svelte syntax highlight?
-  { "leafOfTree/vim-svelte-plugin",
-    config = function()
-      vim.g.vim_svelte_plugin_use_typescript = 1
-    end,
-  },
-
-  -- Theme: Catppuccin
-  { "catppuccin/nvim", name = "colorscheme:catppuccin",
-    config = function() vim.cmd.colorscheme('catppuccin-frappe') end, -- default colorscheme
-  },
-
 }
 
 -- plugin manager bootstrap (lazy.nvim)
@@ -117,10 +120,16 @@ require('lazy').setup(plugins)
 
 -- Keymaps: Harpoon 2
 local h = require("harpoon")
-h:setup()
+h:setup({
+  settings = {
+    save_on_toggle = true
+  }
+})
 vim.keymap.set("n", "<leader>a", function() h:list():add() end)
 vim.keymap.set("n", "<leader><space>", function() h.ui:toggle_quick_menu(h:list()) end)
 vim.keymap.set("n", "<leader>j", function() h:list():select(1) end)
 vim.keymap.set("n", "<leader>k", function() h:list():select(2) end)
 vim.keymap.set("n", "<leader>l", function() h:list():select(3) end)
-vim.keymap.set("n", "<leader>;", function() h:list():select(4) end)
+vim.keymap.set("n", "<leader>f", function() h:list():select(4) end)
+vim.keymap.set("n", "<leader>d", function() h:list():select(5) end)
+vim.keymap.set("n", "<leader>s", function() h:list():select(6) end)
